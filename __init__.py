@@ -282,30 +282,35 @@ gui_hooks.card_will_show.append(munge_card)
 
 def munge_field(txt: str, editor: Editor):
     """Parse -lilypond field/lilypond tags in field before saving"""
-    fields: list[str] = _getfields(editor.note.model())
-    field: str = fields[editor.currentField]
-    if field_match := FIELD_NAME_REGEXP.match(field):
-        # LilyPond field
-        template_name = field_match.group(FIELD_NAME_REGEXP.groupindex['template'])
+    if editor.currentField is not None:
+        fields: list[str] = _getfields(editor.note.model())
+        field: str = fields[editor.currentField]
+        if field_match := FIELD_NAME_REGEXP.match(field):
+            # LilyPond field
+            template_name = field_match.group(FIELD_NAME_REGEXP.groupindex['template'])
 
-        if (dest_field := field_match.group(FIELD_NAME_REGEXP.groupindex['field']) + TARGET_FIELD_NAME_SUFFIX)\
-                in fields:
-            # Target field exists, populate it
-            editor.note[dest_field] = _img_link(template_name, txt)
+            if (dest_field := field_match.group(FIELD_NAME_REGEXP.groupindex['field']) + TARGET_FIELD_NAME_SUFFIX)\
+                    in fields:
+                # Target field exists, populate it
+                editor.note[dest_field] = _img_link(template_name, txt)
+                return txt
+            else:
+                # Substitute in-place
+
+                if IMG_TAG_REGEXP.match(txt):
+                    # Field already contains rendered image
+                    return txt
+
+                return _img_link(template_name, txt)
+        elif field.endswith(TARGET_FIELD_NAME_SUFFIX):
+            # Field is a destination for rendered images, won't contain code
             return txt
         else:
-            # Substitute in-place
-
-            if IMG_TAG_REGEXP.match(txt):
-                # Field already contains rendered image
-                return txt
-
-            return _img_link(template_name, txt)
-    elif field.endswith(TARGET_FIELD_NAME_SUFFIX):
-        # Field is a destination for rendered images, won't contain code
-        return txt
+            # Normal field
+            # Substitute LilyPond tags
+            return _munge_string(txt)
     else:
-        # Normal field
+        # Fallback if can't identify current field
         # Substitute LilyPond tags
         return _munge_string(txt)
 
