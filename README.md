@@ -100,7 +100,7 @@ Note that the contents of the `-lilypondimg` field will be overwritten so don't 
 anything important in there.
 
 ## ToDo
-[x] Configuration parameters for lilypond executable
-[] Config options for <img> HTML tag attributes (alt, etc.)
-[] Menu integration (for templates?)
-[] Is it true that changing templates requires restarting?
+* [x] Configuration parameters for lilypond executable
+* [ ] Config options for <img> HTML tag attributes (alt, etc.)
+* [ ] Menu integration (for templates?)
+* [ ] Menu option to regenerate _all_ images (also reload templates)
