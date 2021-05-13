@@ -46,7 +46,7 @@ like this:
 
 Where `%ANKI%` will be replaced with the code to be rendered.
 
-You can add your own templates to the `user_files` directory in the addoon's files
+You can add your own templates to the `user_files` directory in the addon's files
 (see `Tools -> Addons -> LilyPond Integration -> View Files`). You'll need to restart
 Anki after making any changes.
 
