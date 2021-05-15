@@ -67,7 +67,7 @@ os.environ['PATH'] = f"{os.environ['PATH']}:/usr/local/bin"     # TODO Platform 
 
 def tpl_file(name):
     """Build the full filename for template name."""
-    return os.path.join(USER_FILES_DIR, "%s.ly" % (name,))
+    return os.path.join(USER_FILES_DIR, "%s.ily" % (name,))
 
 
 def set_template(name, content):

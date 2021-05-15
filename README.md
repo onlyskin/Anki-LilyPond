@@ -104,4 +104,4 @@ anything important in there.
 * [ ] Config options for <img> HTML tag attributes (alt, etc.)
 * [ ] Menu integration (for templates?)
 * [ ] Menu option to regenerate _all_ images (also reload templates)
-* [ ] Use .ily files for templates
+* [x] Use .ily files for templates
