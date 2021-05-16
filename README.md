@@ -105,3 +105,4 @@ anything important in there.
 * [ ] Menu integration (for templates?)
 * [ ] Menu option to regenerate _all_ images (also reload templates)
 * [x] Use .ily files for templates
+* [ ] Allow simple pathnames for \include-s in templates
