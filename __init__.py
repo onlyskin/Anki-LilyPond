@@ -288,11 +288,13 @@ def munge_field(txt: str, editor: Editor):
         if field_match := FIELD_NAME_REGEXP.match(field):
             # LilyPond field
             template_name = field_match.group(FIELD_NAME_REGEXP.groupindex['template'])
+            # Check to avoid compiling empty templates
+            img_link = _img_link(template_name, txt) if txt != "" else txt
 
             if (dest_field := field_match.group(FIELD_NAME_REGEXP.groupindex['field']) + TARGET_FIELD_NAME_SUFFIX)\
                     in fields:
                 # Target field exists, populate it
-                editor.note[dest_field] = _img_link(template_name, txt)
+                editor.note[dest_field] = img_link
                 return txt
             else:
                 # Substitute in-place
@@ -300,8 +302,8 @@ def munge_field(txt: str, editor: Editor):
                 if IMG_TAG_REGEXP.match(txt):
                     # Field already contains rendered image
                     return txt
-
-                return _img_link(template_name, txt)
+                else:
+                    return img_link
         elif field.endswith(TARGET_FIELD_NAME_SUFFIX):
             # Field is a destination for rendered images, won't contain code
             return txt
