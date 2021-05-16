@@ -49,6 +49,8 @@ Where `%ANKI%` will be replaced with the code to be rendered.
 You can add your own templates to the `user_files` directory in the addon's files
 (see `Tools -> Addons -> LilyPond Integration -> View Files`). You'll need to restart
 Anki after making any changes.
+Also note that if you want to use LilyPond's `\include` directive you'll need to
+provide to _full path_ to the file.
 
 To use a template called `exampleTemplate`:
 * In inline tags:
