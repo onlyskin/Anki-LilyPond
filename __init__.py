@@ -38,7 +38,7 @@ from aqt.utils import showInfo
 _config = mw.addonManager.getConfig(__name__)
 
 TEMP_FILE = tmpfile("lilypond", ".ly")
-LILYPOND_CMD = ["lilypond"] + _config['command_line_params'] + ["--o", TEMP_FILE, TEMP_FILE]
+LILYPOND_CMD = [_config['executable'],] + _config['command_line_params'] + ["--o", TEMP_FILE, TEMP_FILE,]
 OUTPUT_FILE_EXT = _config["output_file_ext"]
 DEFAULT_TEMPLATE = _config['default_template']
 USER_FILES_DIR = os.path.join(mw.pm.addonFolder(), __name__, "user_files")  # Template directory
@@ -178,7 +178,7 @@ def _build_img(ly, fname):
     :return: None if successful, else error message
     """
     lyfile = open(TEMP_FILE, "w")
-    lyfile.write(ly.decode("utf-8"))
+    lyfile.write(ly)
     lyfile.close()
 
     log = open(TEMP_FILE + ".log", "w")
@@ -209,10 +209,10 @@ def _img_link(template, ly_code) -> str:
 
     # Finalize LilyPond source.
     ly_code = get_template(template, ly_code)
-    ly_code = ly_code.encode("utf8")
 
-    filename = f"lilypond-{checksum(ly_code)}{OUTPUT_FILE_EXT}"
+    filename = f"lilypond-{checksum(ly_code.encode('utf_8'))}{OUTPUT_FILE_EXT}"
 
+    # TODO Attach template & substituted code in way that allows recompilation
     link = f'<img src="{filename}" alt="{ly_code}">'
 
     # Build image if necessary.
@@ -289,7 +289,7 @@ def munge_field(txt: str, editor: Editor):
             # LilyPond field
             template_name = field_match.group(FIELD_NAME_REGEXP.groupindex['template'])
             # Check to avoid compiling empty templates
-            img_link = _img_link(template_name, txt) if txt != "" else txt
+            img_link = _img_link(template_name, _ly_from_html(txt)) if txt != "" else txt
 
             if (dest_field := field_match.group(FIELD_NAME_REGEXP.groupindex['field']) + TARGET_FIELD_NAME_SUFFIX)\
                     in fields:
