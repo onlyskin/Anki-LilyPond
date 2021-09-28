@@ -1,3 +1,5 @@
+%%% default.ily
+\version "2.22.1"
 % http://lilypond.org/doc/Documentation/usage/other-programs
 \paper{
   indent = 0\mm
