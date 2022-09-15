@@ -1,0 +1,6 @@
+{
+  "default_template": "default",
+  "executable": "lilypond",
+  "command_line_params": ["-dbackend=eps", "-dno-gs-load-fonts", "-dinclude-eps-fonts", "-dpixmap-format=pngalpha", "--png"],
+  "output_file_ext": ".png"
+}
